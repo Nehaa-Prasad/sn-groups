@@ -1,26 +1,117 @@
 @import "tailwindcss";
 
+/* ---------- ROOT ---------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ---------- BASE ---------- */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
+  background: linear-gradient(to bottom right, #ffffff, #faf7ef);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ---------- SCROLL SNAP ---------- */
+main {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+}
+
+.section {
+  scroll-snap-align: start;
+}
+
+/* ---------- GLOW BACKGROUND ---------- */
+.bg-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201,164,76,0.15), transparent);
+  filter: blur(80px);
+  z-index: 0;
+}
+
+/* ---------- SERVICE CARDS ---------- */
+.ultra-card {
+  padding: 30px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #eee;
+  font-size: 18px;
+  font-weight: 600;
+  transition: 0.4s;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.ultra-card:hover {
+  background: linear-gradient(135deg, #C9A44C, #8B6B2E);
+  color: white;
+  transform: translateY(-10px) scale(1.08);
+}
+
+/* ---------- LEADERSHIP ---------- */
+.leader-card {
+  padding: 30px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #eee;
+  transition: 0.3s;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.leader-card:hover {
+  transform: translateY(-8px);
+  border-color: #C9A44C;
+}
+
+/* ---------- NAVBAR ---------- */
+nav a {
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #C9A44C;
+}
+
+/* ---------- PARALLAX EFFECT ---------- */
+.parallax {
+  transition: transform 0.2s ease-out;
+}
+
+/* ---------- PARTICLES ---------- */
+.particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #C9A44C;
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 10s infinite linear;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100vh);
+  }
+}
+
+/* ---------- MAGNETIC BUTTON EFFECT ---------- */
+.ultra-card {
+  transition: transform 0.2s ease, box-shadow 0.2s;
+}
+
+.ultra-card:hover {
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 20px 40px rgba(201,164,76,0.3);
 }
