@@ -74,8 +74,8 @@ export default function Home() {
           src="/logo.png"
           className="w-52 mb-6 z-10"
           initial={{ scale: 0.6, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1 }}
+          animate={{ scale: 2.5, opacity: 1 }}
+          transition={{ duration: 2 }}
         />
 
         {/* TITLE */}
@@ -84,13 +84,12 @@ export default function Home() {
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
-          SN Groups
+         
         </motion.h1>
 
         {/* TAGLINE */}
-        <p className="mt-6 text-lg text-gray-600 max-w-xl z-10">
-          Engineering growth across logistics, construction, and manufacturing
-          through precision, reliability, and innovation.
+        <p className="mt-11 text-lg text-gray-600 max-w-xl z-10">
+          Enabling growth across logistics, construction, and manufacturing through precise, reliable, and innovative engineering.
         </p>
 
         {/* CONTACT */}
@@ -106,8 +105,8 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <Section id="about" title="About SN Groups">
-        SN Groups is a rapidly growing enterprise delivering professional solutions across rentals, sales, service, and manufacturing. With operations spanning logistics, construction, and manufacturing, the company focuses on scalability, efficiency, and consistent execution.
+      <Section id="about" title="ABOUT US">
+        SN Groups is a dynamic and rapidly expanding enterprise offering end-to-end professional solutions across rentals, sales, service, and manufacturing. Driven by a deep commitment to quality, precision, and performance, the company integrates advanced practices with strategic execution to deliver exceptional results. By continuously embracing innovation and maintaining the highest standards of reliability and efficiency, SN Groups positions itself as a trusted partner for businesses seeking long-term value and consistent excellence across diverse industrial sectors
       </Section>
 
       {/* SERVICES */}
@@ -118,7 +117,7 @@ export default function Home() {
           {/* BUTTONS */}
           <motion.div
             animate={{ opacity: hovered ? 0 : 1 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.6 }}
             className="flex gap-8 absolute"
           >
             {["Rentals", "Sales", "Service", "Logistics"].map((item) => (
@@ -140,7 +139,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1, x: -200, y: -120 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 2 }}
                 className="absolute text-[#C9A44C] text-xl font-semibold"
               >
                 {hovered}
@@ -150,7 +149,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.9}}
                 className="absolute w-full h-full flex items-center justify-center"
               >
                 <div
@@ -183,18 +182,23 @@ export default function Home() {
 
       {/* VISION */}
       <Section id="vision" title="Vision">
-        To become a trusted and leading enterprise across logistics, construction, and manufacturing through innovation and reliability.
+        To become a trusted and leading enterprise across logistics, construction, and manufacturing by delivering innovative, reliable, and high-quality solutions that consistently meet and exceed industry expectations. With a strong focus on operational excellence, technological advancement, and customer-centric practices, we aim to create long-term value, foster meaningful partnerships, and drive sustainable growth, positioning SN Groups as a respected and influential name across multiple industrial sectors.
       </Section>
-
-      {/* MISSION */}
-      <Section id="mission" title="Mission">
-        <ul className="space-y-3 text-left">
-          <li>• Deliver high-quality services</li>
-          <li>• Build strong relationships</li>
-          <li>• Expand across industries</li>
-          <li>• Use technology-driven solutions</li>
-        </ul>
-      </Section>
+{/* MISSION */}
+<Section id="mission" title="Mission">
+  <ul className="space-y-3 text-left">
+    <li>• Deliver high-quality services with a strong focus on precision, consistency, and excellence</li>
+    <li>• Build strong and long-term relationships based on trust, transparency, and reliability</li>
+    <li>• Expand across industries by identifying new opportunities and driving sustainable growth</li>
+    <li>• Leverage technology-driven solutions to improve efficiency, performance, and scalability</li>
+    <li>• Ensure timely execution and dependable delivery across all projects and operations</li>
+    <li>• Continuously enhance processes to maintain operational excellence and industry standards</li>
+    <li>• Foster innovation by adapting to evolving market trends and modern technologies</li>
+    <li>• Maintain a customer-centric approach focused on satisfaction, value, and long-term success</li>
+    <li>• Promote professionalism, accountability, and a culture of continuous improvement</li>
+    <li>• Deliver cost-effective solutions without compromising on quality and reliability</li>
+  </ul>
+</Section>
 
       {/* FOUNDERS */}
       <Section 
@@ -210,7 +214,7 @@ export default function Home() {
             {/* BUTTONS */}
             <motion.div
               animate={{ opacity: founderHovered ? 0 : 1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.6 }}
               className="flex gap-8 absolute"
             >
               {["Founder", "Co-Founder"].map((item) => (
@@ -232,7 +236,7 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1, x: -200, y: -120 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 2 }}
                   className="absolute text-[#C9A44C] text-xl font-semibold"
                 >
                   {founderHovered}
@@ -242,7 +246,7 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
+                  transition={{ duration: 0.6 }}
                   className="absolute w-full h-full flex items-center justify-center"
                 >
                   <div
@@ -307,16 +311,16 @@ function Section({ id, title, children }: any) {
 function getServiceContent(service: string) {
   switch (service) {
     case "Rentals":
-      return "We provide reliable and cost-effective rental solutions tailored to industrial and commercial needs.";
+      return "We provide reliable and cost-effective rental solutions tailored to the specific needs of industrial and commercial operations, delivering high-quality equipment, dependable service, and flexible support that ensures efficiency, minimizes downtime, and enhances overall productivity..";
 
     case "Sales":
-      return "We offer high-quality products with a focus on durability, performance, and client satisfaction.";
+      return "We offer high-quality products developed to deliver exceptional durability and performance, with a strong focus on client satisfaction, ensuring reliable operation, long-term efficiency, and consistent value across a wide range of industrial and commercial applications.";
 
     case "Service":
-      return "Our service solutions ensure maintenance, efficiency, and long-term reliability of equipment and systems.";
+      return "Our service solutions are designed to ensure comprehensive maintenance, optimize operational efficiency, and deliver long-term reliability of equipment and systems, helping businesses achieve consistent performance, reduced downtime, and sustained operational excellence.";
 
     case "Logistics":
-      return "We support efficient logistics and supply chain operations ensuring timely and smooth delivery.";
+      return "We support efficient logistics and supply chain operations by delivering timely, reliable, and seamless movement of goods, ensuring smooth coordination, minimized delays, and enhanced operational efficiency across every stage of the supply chain.";
 
     default:
       return "";
@@ -326,10 +330,20 @@ function getServiceContent(service: string) {
 function getFounderContent(role: string) {
   switch (role) {
     case "Founder":
-      return "With a strong background in Aeronautical Engineering, the Founder brings technical precision, analytical thinking, and problem-solving expertise, driving operational excellence and technical direction.";
+      return (
+        <>
+          <strong>Sharan S</strong>, <br />
+          Founder of SN Groups, brings a high level of technical precision, analytical thinking, and problem-solving expertise, playing a pivotal role in driving operational excellence, optimizing processes, and providing strategic technical direction that supports the company’s growth and innovation.
+        </>
+      );
 
     case "Co-Founder":
-      return "With a strong foundation in technology and business execution, the Co-Founder focuses on strategy, operations, and growth, ensuring scalability and positioning SN Groups as a forward-looking enterprise.";
+      return (
+        <>
+          <strong>Nehaa S Prasad</strong>, <br />
+          Co-Founder of SN Groups, brings a strong foundation in technology and business execution, focusing on strategy, operations, and growth, ensuring scalability and positioning the organization as a forward-looking enterprise.
+        </>
+      );
 
     default:
       return "";
@@ -364,28 +378,28 @@ function ScrollIndicator() {
     return () => main.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const circumference = 283;
-  const offset = circumference - progress * circumference;
+  const circumference = 400;
+  const offset = circumference - progress * 278;
 
   return (
     <div
       className="fixed bottom-6 right-6 z-50 cursor-pointer hover:scale-110 transition"
       onClick={() => {
         const main = document.querySelector("main");
-        main?.scrollTo({ top: 0, behavior: "smooth" });
+        main?.scrollTo({ top: 5, behavior: "smooth" });
       }}
     >
       <div className="relative w-14 h-14">
 
         <svg
-          className="absolute top-0 left-0 w-full h-full -rotate-90"
+          className="absolute top-0 right-0 w-full h-full -rotate-90"
           viewBox="0 0 100 100"
         >
           <circle
             cx="50"
             cy="50"
             r="45"
-            stroke="#eee"
+            stroke="#eeeeeeff"
             strokeWidth="5"
             fill="none"
           />
@@ -395,7 +409,7 @@ function ScrollIndicator() {
             cy="50"
             r="45"
             stroke="#C9A44C"
-            strokeWidth="5"
+            strokeWidth="7"
             fill="none"
             strokeLinecap="round"
             strokeDasharray={circumference}
@@ -404,7 +418,7 @@ function ScrollIndicator() {
         </svg>
 
         <div className="absolute inset-0 flex items-center justify-center">
-          <img src="/logo.png" className="w-8 h-8 object-contain" />
+          <img src="/logo.png" className="w-15 h-15 object-contain" />
         </div>
 
       </div>
