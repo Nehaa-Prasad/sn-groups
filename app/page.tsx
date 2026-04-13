@@ -28,7 +28,7 @@ export default function Home() {
     <main>
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 w-full bg-white/70 backdrop-blur-md z-50 border-b">
+      <nav className="fixed top-0 left-0 right-[15px] inset-x-0 z-50 bg-white/70 backdrop-blur-md border-b">
         <div className="max-w-6xl mx-auto flex justify-between px-6 py-3">
           <h1 className="text-[#C9A44C] font-bold text-lg">SN Groups</h1>
           <div className="space-x-6 text-sm">
@@ -184,21 +184,22 @@ export default function Home() {
       <Section id="vision" title="Vision">
         To become a trusted and leading enterprise across logistics, construction, and manufacturing by delivering innovative, reliable, and high-quality solutions that consistently meet and exceed industry expectations. With a strong focus on operational excellence, technological advancement, and customer-centric practices, we aim to create long-term value, foster meaningful partnerships, and drive sustainable growth, positioning SN Groups as a respected and influential name across multiple industrial sectors.
       </Section>
-{/* MISSION */}
-<Section id="mission" title="Mission">
-  <ul className="space-y-3 text-left">
-    <li>• Deliver high-quality services with a strong focus on precision, consistency, and excellence</li>
-    <li>• Build strong and long-term relationships based on trust, transparency, and reliability</li>
-    <li>• Expand across industries by identifying new opportunities and driving sustainable growth</li>
-    <li>• Leverage technology-driven solutions to improve efficiency, performance, and scalability</li>
-    <li>• Ensure timely execution and dependable delivery across all projects and operations</li>
-    <li>• Continuously enhance processes to maintain operational excellence and industry standards</li>
-    <li>• Foster innovation by adapting to evolving market trends and modern technologies</li>
-    <li>• Maintain a customer-centric approach focused on satisfaction, value, and long-term success</li>
-    <li>• Promote professionalism, accountability, and a culture of continuous improvement</li>
-    <li>• Deliver cost-effective solutions without compromising on quality and reliability</li>
-  </ul>
-</Section>
+
+      {/* MISSION */}
+      <Section id="mission" title="Mission">
+        <ul className="space-y-3 text-left">
+          <li>• Deliver high-quality services with a strong focus on precision, consistency, and excellence</li>
+          <li>• Build strong and long-term relationships based on trust, transparency, and reliability</li>
+          <li>• Expand across industries by identifying new opportunities and driving sustainable growth</li>
+          <li>• Leverage technology-driven solutions to improve efficiency, performance, and scalability</li>
+          <li>• Ensure timely execution and dependable delivery across all projects and operations</li>
+          <li>• Continuously enhance processes to maintain operational excellence and industry standards</li>
+          <li>• Foster innovation by adapting to evolving market trends and modern technologies</li>
+          <li>• Maintain a customer-centric approach focused on satisfaction, value, and long-term success</li>
+          <li>• Promote professionalism, accountability, and a culture of continuous improvement</li>
+          <li>• Deliver cost-effective solutions without compromising on quality and reliability</li>
+        </ul>
+      </Section>
 
       {/* FOUNDERS */}
       <Section 
@@ -272,9 +273,9 @@ export default function Home() {
                 </motion.div>
               </>
             )}
-
+          
           </div>
-          <footer className="w-full text-center py-6 border-t mt-10 text-sm text-gray-500 bg-white/60 backdrop-blur">
+          <footer>
             © 2026 SN Groups. All rights reserved.
           </footer>
         </div>
