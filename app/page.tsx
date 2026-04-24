@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform} from "framer-motion";
 import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 
 /* TYPE FOR PARTICLES */
 type Particle = {
@@ -24,22 +25,61 @@ export default function Home() {
 
   const [hovered, setHovered] = useState<string | null>(null);
   const [founderHovered, setFounderHovered] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
-    <main>
+    <main className="w-full min-h-screen overflow-y-auto">
 
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-[15px] inset-x-0 z-50 bg-white/70 backdrop-blur-md border-b">
-        <div className="max-w-6xl mx-auto flex justify-between px-6 py-3">
-          <h1 className="text-[#C9A44C] font-bold text-lg">SN Groups</h1>
-          <div className="space-x-6 text-sm">
-            <a href="#about">About</a>
-            <a href="#services">Services</a>
-            <a href="#vision">Vision</a>
-            <a href="#mission">Mission</a>
-            <a href="#leadership">Founders</a>
+      <nav className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-md border-b">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
+
+        {/* LOGO */}
+        <h1 className="text-[#C9A44C] font-bold text-lg">
+          SN Groups
+        </h1>
+
+        {/* DESKTOP MENU */}
+        <div className="hidden md:flex space-x-6 text-sm">
+          <a href="#about" className="nav-link">About</a>
+          <a href="#services" className="nav-link">Services</a>
+          <a href="#vision" className="nav-link">Vision</a>
+          <a href="#mission" className="nav-link">Mission</a>
+          <a href="#leadership" className="nav-link">Founders</a>
+        </div>
+
+        {/* MOBILE BUTTON */}
+        <button
+          className="md:hidden text-xl"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <Menu />
+        </button>
+      </div>
+
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/20"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="flex justify-center items-start pt-16">
+            
+            {/* MENU BOX */}
+            <div
+              className="bg-white w-[90%] max-w-sm rounded-xl shadow-lg py-6 flex flex-col items-center gap-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <a href="#about" onClick={() => setMenuOpen(false)} className="nav-link">About</a>
+              <a href="#services" onClick={() => setMenuOpen(false)} className="nav-link">Services</a>
+              <a href="#vision" onClick={() => setMenuOpen(false)} className="nav-link">Vision</a>
+              <a href="#mission" onClick={() => setMenuOpen(false)} className="nav-link">Mission</a>
+              <a href="#leadership" onClick={() => setMenuOpen(false)} className="nav-link">Founders</a>
+            </div>
+
           </div>
         </div>
-      </nav>
+      )}
+    </nav>
 
       {/* HERO */}
       <section
@@ -72,7 +112,7 @@ export default function Home() {
         {/* LOGO */}
         <motion.img
           src="/logo.png"
-          className="w-52 mb-6 z-10"
+          className="w-32 md:w-44 lg:w-52 mb-6 z-10"
           initial={{ scale: 0.6, opacity: 0 }}
           animate={{ scale: 2.5, opacity: 1 }}
           transition={{ duration: 2 }}
@@ -80,7 +120,7 @@ export default function Home() {
 
         {/* TITLE */}
         <motion.h1
-          className="text-6xl font-bold text-[#C9A44C] z-10"
+          className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#C9A44C] z-10"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
         >
@@ -112,68 +152,62 @@ export default function Home() {
       {/* SERVICES */}
       <Section id="services" title="Our Services">
 
-        <div className="relative w-full mx-auto h-[450px] flex items-center justify-center">
+        <div className="relative w-full min-h-[300px] md:min-h-[450px] flex items-center justify-center">
 
           {/* BUTTONS */}
           <motion.div
+            initial={{ opacity: 1 }}
             animate={{ opacity: hovered ? 0 : 1 }}
-            transition={{ duration: 0.6 }}
-            className="flex gap-8 absolute"
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="flex flex-wrap justify-center gap-4 md:gap-8 px-4"
           >
             {["Rentals", "Sales", "Service", "Logistics"].map((item) => (
               <motion.div
                 key={item}
                 whileHover={{ scale: 1.1 }}
-                className="ultra-card px-8 py-4"
-                onMouseEnter={() => setHovered(item)}
+                className="ultra-card px-6 py-3 md:px-8 md:py-4"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHovered(item);
+                }}
               >
                 {item}
               </motion.div>
             ))}
           </motion.div>
 
-          {/* HOVER VIEW */}
+          {/* POPUP */}
           {hovered && (
-            <>
-              {/* TOP LEFT LABEL */}
+            <motion.div
+              className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/10"
+              onClick={() => setHovered(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1, x: -200, y: -120 }}
-                transition={{ duration: 2 }}
-                className="absolute text-[#C9A44C] text-xl font-semibold"
+                className="bg-white w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] xl:w-[40%]
+                          p-6 md:p-8 rounded-2xl shadow-xl
+                          flex flex-col items-start justify-center text-left relative"
+                initial={{ scale: 0.95, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.50, ease: "easeOut", delay: 0.1 }}
+                onClick={(e) => e.stopPropagation()}
               >
-                {hovered}
-              </motion.div>
 
-              {/* BIG BOX */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.9}}
-                className="absolute w-full h-full flex items-center justify-center"
-              >
-                <div
-                className="bg-white absolute left-1/2 top-1/2 
-                          -translate-x-1/2 -translate-y-1/2
-                          w-[900px] max-w-[1100px] h-[400px] 
-                          p-10 rounded-2xl shadow-xl 
-                          flex items-center justify-center text-center"
-                onMouseLeave={() => setHovered(null)}
-                >
-                  {/* 🔥 TITLE TOP LEFT */}
-                  <h3 className="absolute top-6 left-6 text-2xl text-[#C9A44C] font-semibold">
-                    {hovered}
-                  </h3>
+                {/* TITLE */}
+                <h3 className="absolute top-4 left-4 text-lg md:text-xl text-[#C9A44C] font-semibold">
+                  {hovered}
+                </h3>
 
-                  {/* 🔥 CENTER CONTENT */}
-                  <div className="w-full h-full flex items-center justify-center text-center">
-                    <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">
-                      {getServiceContent(hovered)}
-                    </p>
-                  </div>
-                </div>
+                {/* CONTENT */}
+                <p className="text-gray-600 text-sm md:text-base w-full max-w-2xl leading-relaxed mt-8">
+                  {getServiceContent(hovered)}
+                </p>
+
               </motion.div>
-            </>
+            </motion.div>
           )}
 
         </div>
@@ -204,26 +238,30 @@ export default function Home() {
       {/* FOUNDERS */}
       <Section 
       id="leadership" 
-      className="section min-h-screen flex flex-col items-center px-6 text-center relative"
+      className="section min-h-screen flex flex-col items-center px-4 md:px-6 lg:px-8 text-center relative"
       >
         <h2 className="text-4xl font-semibold text-[#C9A44C] mt-20">
           Founders
         </h2>
         <div className="flex flex-col justify-between w-full h-[70vh]">
-          <div className="relative w-full mx-auto h-[450px] text-center flex items-center justify-center">
+          <div className="relative w-full mx-auto min-h-[300px] md:min-h-[450px] text-center flex items-center justify-center">
 
             {/* BUTTONS */}
             <motion.div
+              initial={{ opacity: 1 }}
               animate={{ opacity: founderHovered ? 0 : 1 }}
-              transition={{ duration: 0.6 }}
-              className="flex gap-8 absolute"
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 px-4"
             >
               {["Founder", "Co-Founder"].map((item) => (
                 <motion.div
                   key={item}
                   whileHover={{ scale: 1.1 }}
                   className="ultra-card px-8 py-4 whitespace-nowrap"
-                  onMouseEnter={() => setFounderHovered(item)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFounderHovered(item);
+                  }}
                 >
                   {item}
                 </motion.div>
@@ -232,46 +270,33 @@ export default function Home() {
 
             {/* HOVER VIEW */}
             {founderHovered && (
-              <>
-                {/* TOP LEFT LABEL */}
+              <motion.div
+                className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/10"
+                onClick={() => setFounderHovered(null)}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.18, ease: "easeOut" }}
+              >
                 <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1, x: -200, y: -120 }}
-                  transition={{ duration: 2 }}
-                  className="absolute text-[#C9A44C] text-xl font-semibold"
+                  className="bg-white w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] xl:w-[40%]
+                  max-w-none min-h-[250px] md:min-h-[320px]
+                  p-6 md:p-8 rounded-2xl shadow-xl
+                  flex flex-col items-start justify-center text-left relative"
+                  initial={{ scale: 0.95, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.50, ease: "easeOut" , delay: 0.1}}
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  {founderHovered}
-                </motion.div>
+                  <h3 className="absolute top-4 left-4 text-lg md:text-xl text-[#C9A44C] font-semibold">
+                    {founderHovered}
+                  </h3>
 
-                {/* BIG BOX */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute w-full h-full flex items-center justify-center"
-                >
-                  <div
-                    className="bg-white absolute left-1/2 top-1/2 
-                              -translate-x-1/2 -translate-y-1/2
-                              w-[900px] max-w-[1100px] h-[400px] 
-                              p-10 rounded-2xl shadow-xl 
-                              flex items-center justify-center text-center"
-                    onMouseLeave={() => setFounderHovered(null)}
-                  >
-                    {/* TITLE TOP LEFT */}
-                    <h3 className="absolute top-6 left-6 text-2xl text-[#C9A44C] font-semibold">
-                      {founderHovered}
-                    </h3>
-
-                    {/* CONTENT */}
-                    <div className="w-full h-full flex items-center justify-center text-center">
-                      <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">
-                        {getFounderContent(founderHovered)}
-                      </p>
-                    </div>
-                  </div>
+                  <p className="text-gray-600 text-sm md:text-base w-full max-w-2xl leading-relaxed mt-6">
+                    {getFounderContent(founderHovered)}
+                  </p>
                 </motion.div>
-              </>
+              </motion.div>
             )}
           
           </div>
@@ -291,7 +316,7 @@ function Section({ id, title, children }: any) {
   return (
     <motion.section
       id={id}
-      className="section min-h-screen flex flex-col justify-center items-center px-6 text-center relative"
+      className="section w-full min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center relative"
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.9 }}

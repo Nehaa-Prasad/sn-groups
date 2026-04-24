@@ -15,13 +15,14 @@ body {
   background: linear-gradient(to bottom right, #ffffff, #faf7ef);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 /* ---------- SCROLL SNAP ---------- */
-main {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
+@media (min-width: 768px) {
+  main {
+    scroll-snap-type: y mandatory;
+  }
 }
 
 .section {
@@ -31,8 +32,10 @@ main {
 /* ---------- GLOW BACKGROUND ---------- */
 .bg-glow {
   position: absolute;
-  width: 600px;
-  height: 600px;
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
   background: radial-gradient(circle, rgba(201,164,76,0.15), transparent);
   filter: blur(80px);
   z-index: 0;
@@ -40,31 +43,45 @@ main {
 
 /* ---------- SERVICE CARDS ---------- */
 .ultra-card {
-  padding: 30px;
+  padding: 16px;
   border-radius: 18px;
   background: white;
   border: 1px solid #eee;
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
-  transition: 0.4s;
+  transition: all 0.3s ease;
   cursor: pointer;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+/* Tablet & Desktop */
+@media (min-width: 768px) {
+  .ultra-card {
+    padding: 24px;
+    font-size: 16px;
+  }
 }
 
 .ultra-card:hover {
   background: linear-gradient(135deg, #C9A44C, #8B6B2E);
   color: white;
-  transform: translateY(-10px) scale(1.08);
+  transform: translateY(-8px) scale(1.05) rotate(1deg);
+  box-shadow: 0 20px 40px rgba(201,164,76,0.3);
 }
 
 /* ---------- LEADERSHIP ---------- */
 .leader-card {
-  padding: 30px;
+  padding: 16px;
   border-radius: 18px;
   background: white;
   border: 1px solid #eee;
   transition: 0.3s;
   box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+@media (min-width: 768px) {
+  .leader-card {
+    padding: 24px;
+  }
 }
 
 .leader-card:hover {
@@ -89,12 +106,18 @@ nav a:hover {
 /* ---------- PARTICLES ---------- */
 .particle {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
   background: #C9A44C;
   border-radius: 50%;
   opacity: 0.3;
   animation: float 10s infinite linear;
+}
+@media (min-width: 768px) {
+  .particle {
+    width: 6px;
+    height: 6px;
+  }
 }
 
 @keyframes float {
@@ -106,12 +129,17 @@ nav a:hover {
   }
 }
 
-/* ---------- MAGNETIC BUTTON EFFECT ---------- */
-.ultra-card {
-  transition: transform 0.2s ease, box-shadow 0.2s;
+.nav-link {
+  font-size: 16px;
+  transition: 0.2s;
 }
 
-.ultra-card:hover {
-  transform: scale(1.08) rotate(1deg);
-  box-shadow: 0 20px 40px rgba(201,164,76,0.3);
+/* Desktop */
+.nav-link:hover {
+  color: #C9A44C;
+}
+
+/* Mobile tap */
+.nav-link:active {
+  color: #C9A44C;
 }
