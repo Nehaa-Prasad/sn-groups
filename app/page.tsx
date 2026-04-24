@@ -385,9 +385,9 @@ function ScrollIndicator() {
     if (!main) return;
 
     const handleScroll = () => {
-      const scrollTop = main.scrollTop;
-
-      const height = main.scrollHeight - main.clientHeight;
+      const scrollTop = window.scrollY;
+      const height =
+        document.documentElement.scrollHeight - window.innerHeight;
 
       if (height <= 0) {
         setProgress(0);
@@ -398,21 +398,22 @@ function ScrollIndicator() {
       setProgress(scrolled);
     };
 
-    main.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll);
     handleScroll();
 
-    return () => main.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const circumference = 400;
-  const offset = circumference - progress * 278;
+  const radius = 45;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference * (1 - progress);
 
   return (
     <div
       className="fixed bottom-6 right-6 z-50 cursor-pointer hover:scale-110 transition"
       onClick={() => {
         const main = document.querySelector("main");
-        main?.scrollTo({ top: 5, behavior: "smooth" });
+        window?.scrollTo({ top: 0, behavior: "smooth" });
       }}
     >
       <div className="relative w-14 h-14">
