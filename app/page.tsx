@@ -151,7 +151,9 @@ export default function Home() {
 
       {/* SERVICES */}
       <Section id="services" title="Our Services">
-
+        <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-auto mb-8 px-4">
+          Our services are designed to support businesses across equipment supply, maintenance, logistics, and workforce management. From rentals and sales to technical servicing, logistics coordination, and human resources outsourcing, we provide integrated solutions that enhance efficiency, reduce downtime, and ensure reliable, long-term operational performance.
+        </p>
         <div className="relative w-full min-h-[300px] md:min-h-[450px] flex items-center justify-center">
 
           {/* BUTTONS */}
@@ -161,7 +163,7 @@ export default function Home() {
             transition={{ duration: 0.4, ease: "easeOut" }}
             className="flex flex-col items-center gap-4 px-4 sm:flex-wrap sm:flex-row sm:justify-center"
           >
-            {["Rentals", "Sales", "Service", "Logistics", "Human Resources Outsourcing"].map((item) => (
+            {["Rentals", "Sales", "Logistics", "HR Outsourcing"].map((item) => (
               <motion.div
                 key={item}
                 whileHover={{ scale: 1.1 }}
@@ -342,13 +344,10 @@ function getServiceContent(service: string) {
     case "Sales":
       return "We offer high-quality products developed to deliver exceptional durability and performance, with a strong focus on client satisfaction, ensuring reliable operation, long-term efficiency, and consistent value across a wide range of industrial and commercial applications.";
 
-    case "Service":
-      return "Our service solutions are designed to ensure comprehensive maintenance, optimize operational efficiency, and deliver long-term reliability of equipment and systems, helping businesses achieve consistent performance, reduced downtime, and sustained operational excellence.";
-
     case "Logistics":
       return "We support efficient logistics and supply chain operations by delivering timely, reliable, and seamless movement of goods, ensuring smooth coordination, minimized delays, and enhanced operational efficiency across every stage of the supply chain.";
 
-    case "Human Resources Outsourcing":
+    case "HR Outsourcing":
       return "We provide comprehensive human resources outsourcing solutions that help businesses manage their workforce efficiently. From recruitment and onboarding to payroll management and compliance, our services streamline operations, reduce administrative burden, and ensure access to skilled talent, enabling organizations to focus on their core growth and strategic objectives.";
 
       default:
