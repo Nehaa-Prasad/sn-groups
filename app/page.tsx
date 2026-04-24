@@ -159,13 +159,13 @@ export default function Home() {
             initial={{ opacity: 1 }}
             animate={{ opacity: hovered ? 0 : 1 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className="flex flex-wrap justify-center gap-4 md:gap-8 px-4"
+            className="flex flex-col items-center gap-4 px-4 sm:flex-wrap sm:flex-row sm:justify-center"
           >
-            {["Rentals", "Sales", "Service", "Logistics"].map((item) => (
+            {["Rentals", "Sales", "Service", "Logistics", "Human Resources Outsourcing"].map((item) => (
               <motion.div
                 key={item}
                 whileHover={{ scale: 1.1 }}
-                className="ultra-card px-6 py-3 md:px-8 md:py-4"
+                className="ultra-card w-full max-w-xs text-center py-3 rounded-xl"
                 onClick={(e) => {
                   e.stopPropagation();
                   setHovered(item);
@@ -348,7 +348,10 @@ function getServiceContent(service: string) {
     case "Logistics":
       return "We support efficient logistics and supply chain operations by delivering timely, reliable, and seamless movement of goods, ensuring smooth coordination, minimized delays, and enhanced operational efficiency across every stage of the supply chain.";
 
-    default:
+    case "Human Resources Outsourcing":
+      return "We provide comprehensive human resources outsourcing solutions that help businesses manage their workforce efficiently. From recruitment and onboarding to payroll management and compliance, our services streamline operations, reduce administrative burden, and ensure access to skilled talent, enabling organizations to focus on their core growth and strategic objectives.";
+
+      default:
       return "";
   }
 }
