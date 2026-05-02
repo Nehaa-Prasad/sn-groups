@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SN Groups
 
-## Getting Started
+Official website of **SN Groups**, representing our presence across logistics, construction, and workforce solutions.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## About
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+SN Groups is committed to enabling growth across industries through reliable services, operational excellence, and innovative engineering solutions.  
+This website serves as a digital representation of our services, values, and leadership.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Our Services
 
-## Learn More
+- Equipment Rentals  
+- Sales & Technical Services  
+- Logistics Solutions  
+- Human Resources Outsourcing  
 
-To learn more about Next.js, take a look at the following resources:
+We provide integrated solutions designed to enhance efficiency, reduce downtime, and ensure long-term operational performance.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
+📧 info.sngroups.in@gmail.com  
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Legal
+
+© 2026 SN Groups. All rights reserved.
+
+All content on this website, including text, design, graphics, and branding, is the intellectual property of SN Groups.  
+Unauthorized use, reproduction, or distribution of any material from this website is strictly prohibited without prior written permission.
+
+---
+
+## Notice
+
+This repository is maintained for official and reference purposes only.  
+Public visibility does not grant rights for reuse, redistribution, or modification of content.

@@ -29,57 +29,7 @@ export default function Home() {
   return (
     <main className="w-full min-h-screen overflow-y-auto">
 
-      {/* NAVBAR */}
-      <nav className="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-md border-b">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
-
-        {/* LOGO */}
-        <h1 className="text-[#C9A44C] font-bold text-lg">
-          SN Groups
-        </h1>
-
-        {/* DESKTOP MENU */}
-        <div className="hidden md:flex space-x-6 text-sm">
-          <a href="#about" className="nav-link">About</a>
-          <a href="#services" className="nav-link">Services</a>
-          <a href="#vision" className="nav-link">Vision</a>
-          <a href="#mission" className="nav-link">Mission</a>
-          <a href="#leadership" className="nav-link">Founders</a>
-        </div>
-
-        {/* MOBILE BUTTON */}
-        <button
-          className="md:hidden text-xl"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <Menu />
-        </button>
-      </div>
-
-      {/* MOBILE MENU */}
-      {menuOpen && (
-        <div
-          className="fixed inset-0 z-[60] bg-black/20"
-          onClick={() => setMenuOpen(false)}
-        >
-          <div className="flex justify-center items-start pt-16">
-            
-            {/* MENU BOX */}
-            <div
-              className="bg-white w-[90%] max-w-sm rounded-xl shadow-lg py-6 flex flex-col items-center gap-4"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <a href="#about" onClick={() => setMenuOpen(false)} className="nav-link">About</a>
-              <a href="#services" onClick={() => setMenuOpen(false)} className="nav-link">Services</a>
-              <a href="#vision" onClick={() => setMenuOpen(false)} className="nav-link">Vision</a>
-              <a href="#mission" onClick={() => setMenuOpen(false)} className="nav-link">Mission</a>
-              <a href="#leadership" onClick={() => setMenuOpen(false)} className="nav-link">Founders</a>
-            </div>
-
-          </div>
-        </div>
-      )}
-    </nav>
+      
 
       {/* HERO */}
       <section
@@ -302,9 +252,6 @@ export default function Home() {
             )}
           
           </div>
-          <footer>
-            © 2026 SN Groups. All rights reserved.
-          </footer>
         </div>
       </Section>
       
@@ -398,6 +345,12 @@ function ScrollIndicator() {
 
       const scrolled = scrollTop / height;
       setProgress(scrolled);
+      const footer = document.querySelector("footer");
+
+      if (footer) {
+        const footerTop = footer.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -415,7 +368,7 @@ function ScrollIndicator() {
       className="fixed bottom-6 right-6 z-50 cursor-pointer hover:scale-110 transition"
       onClick={() => {
         const main = document.querySelector("main");
-        window?.scrollTo({ top: 0, behavior: "smooth" });
+        main?.scrollTo({ top: 0, behavior: "smooth" });
       }}
     >
       <div className="relative w-14 h-14">
