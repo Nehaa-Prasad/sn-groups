@@ -5,7 +5,16 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SN Groups",
-  description: "Drone rental and services",
+  description:
+    "SN Groups offers professional drone rentals, drone sales, aerial photography, and drone services in India. Trusted solutions for construction, surveying, and media production.",
+  keywords: [
+    "drone rental India",
+    "drone rental Bangalore",
+    "drone services India",
+    "drone photography",
+    "drone sales India",
+    "aerial survey drones",
+  ],
   verification: {
     google:"atfNvy9LMLj6IDHx5i_-t4t7jETHuX8bP-3_SOLJxIQ",
   },

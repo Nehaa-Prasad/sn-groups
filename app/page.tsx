@@ -102,7 +102,8 @@ export default function Home() {
       {/* SERVICES */}
       <Section id="services" title="Our Services">
         <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-auto mb-8 px-4">
-          Our services are designed to support businesses across equipment supply, maintenance, logistics, and workforce management. From rentals and sales to technical servicing, logistics coordination, and human resources outsourcing, we provide integrated solutions that enhance efficiency, reduce downtime, and ensure reliable, long-term operational performance.
+          SN Groups provides professional drone rental and drone sales services across India. Through our drone division, Skysnap Studio, we specialize in aerial photography, surveying and industrial drone solutions for construction, real estate, and media production.
+          We offer reliable, high-performance drones and expert support to help businesses capture, analyze, and optimize their operations from above.
         </p>
         <div className="relative w-full min-h-[300px] md:min-h-[450px] flex items-center justify-center">
 
