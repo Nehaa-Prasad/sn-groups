@@ -1,410 +1,479 @@
 "use client";
 
-import { motion, useScroll, useTransform} from "framer-motion";
-import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, type ReactNode, type ElementType } from "react";
+import Image from "next/image";
+import { 
+  Menu, X, Sun, Moon, 
+  Truck, HardHat, Settings, Factory, 
+  Target, Eye, Award, ArrowUpRight,
+  Mail, Phone
+} from "lucide-react";
 
-/* TYPE FOR PARTICLES */
+/* TYPES */
 type Particle = {
   left: number;
   duration: number;
+  size: number;
 };
 
-export default function Home() {
+type Service = {
+  id: string;
+  title: string;
+  description: string;
+  icon: ElementType;
+  span?: string;
+};
 
-  /* PARTICLES STATE */
+/* DATA */
+const SERVICES: Service[] = [
+  { 
+    id: "rentals", 
+    title: "Rentals", 
+    description: "Reliable and cost-effective rental solutions tailored for industrial and commercial operations.",
+    icon: Truck,
+    span: "md:col-span-2 md:row-span-1"
+  },
+  { 
+    id: "sales", 
+    title: "Sales", 
+    description: "High-quality products developed for exceptional durability and long-term performance.",
+    icon: HardHat,
+    span: "md:col-span-1 md:row-span-1"
+  },
+  { 
+    id: "service", 
+    title: "Service", 
+    description: "Comprehensive maintenance and optimization solutions for sustained operational excellence.",
+    icon: Settings,
+    span: "md:col-span-1 md:row-span-2"
+  },
+  { 
+    id: "logistics", 
+    title: "Logistics", 
+    description: "Seamless movement of goods ensuring coordination and efficiency across the supply chain.",
+    icon: Factory,
+    span: "md:col-span-2 md:row-span-1"
+  }
+];
+
+const FOUNDERS = [
+  {
+    name: "Sharan S",
+    role: "Founder",
+    description: "Brings technical precision and strategic direction, driving operational excellence and innovation.",
+    image: "/logo.png"
+  },
+  {
+    name: "Nehaa S Prasad",
+    role: "Co-Founder",
+    description: "Focuses on strategy and business execution, ensuring scalability and forward-looking growth.",
+    image: "/logo.png"
+  }
+];
+
+export default function Home() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
 
   useEffect(() => {
-    const generated = [...Array(15)].map(() => ({
+    // Check system preference or saved theme
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      requestAnimationFrame(() => setIsDarkMode(true));
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+
+    // Generate particles
+    const generated = [...Array(20)].map(() => ({
       left: Math.random() * 100,
-      duration: 6 + Math.random() * 5,
+      duration: 10 + Math.random() * 15,
+      size: 2 + Math.random() * 4,
     }));
-    setParticles(generated);
+    requestAnimationFrame(() => setParticles(generated));
   }, []);
 
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [founderHovered, setFounderHovered] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleTheme = () => {
+    const newTheme = !isDarkMode;
+    setIsDarkMode(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme ? "dark" : "light");
+    localStorage.setItem("theme", newTheme ? "dark" : "light");
+  };
+
   return (
-    <main className="w-full min-h-screen overflow-y-auto">
-
+    <main className="relative bg-background text-foreground transition-colors duration-500 overflow-x-hidden">
       
+      {/* NAVBAR */}
+      <nav className="fixed top-6 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl glass rounded-2xl z-50 px-6 py-4 flex justify-between items-center shadow-lg">
+        <div className="flex items-center gap-2">
+          <Image src="/logo.png" alt="SN Groups" width={40} height={40} className="object-contain" />
+          <span className="font-bold text-xl tracking-tight text-gradient">SN Groups</span>
+        </div>
 
-      {/* HERO */}
-      <section
-        className="section min-h-screen flex flex-col justify-center items-center text-center relative overflow-hidden"
-        onMouseMove={(e) => {
-          const x = (e.clientX / window.innerWidth - 0.5) * 20;
-          const y = (e.clientY / window.innerHeight - 0.5) * 20;
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          {["About", "Services", "Vision", "Mission", "Founders"].map((item) => (
+            <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-primary transition-colors">
+              {item}
+            </a>
+          ))}
+          <button 
+            onClick={toggleTheme}
+            className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          >
+            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+          <a href="mailto:sngroups.in@gmail.com" className="btn-premium">
+            Contact Us
+          </a>
+        </div>
 
-          const el = document.getElementById("parallax");
-          if (el) {
-            el.style.transform = `translate(${x}px, ${y}px)`;
-          }
-        }}
-      >
-        {/* GLOW */}
-        <div id="parallax" className="bg-glow parallax"></div>
+        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X /> : <Menu />}
+        </button>
+      </nav>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 glass pt-32 px-10 flex flex-col gap-6 md:hidden"
+          >
+            {["About", "Services", "Vision", "Mission", "Founders"].map((item) => (
+              <a 
+                key={item} 
+                href={`#${item.toLowerCase()}`} 
+                onClick={() => setIsMenuOpen(false)}
+                className="text-2xl font-semibold"
+              >
+                {item}
+              </a>
+            ))}
+            <div className="flex items-center justify-between mt-8">
+               <button onClick={toggleTheme} className="p-3 rounded-full bg-primary/10">
+                {isDarkMode ? <Sun /> : <Moon />}
+              </button>
+              <a href="mailto:sngroups.in@gmail.com" className="btn-premium">
+                Contact Us
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* HERO SECTION */}
+      <section className="section min-h-screen relative flex items-center justify-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/hero.png" 
+            alt="Engineering" 
+            fill
+            className="object-cover opacity-40 dark:opacity-20"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        </div>
 
         {/* PARTICLES */}
-        {particles.map((p: Particle, i: number) => (
+        {particles.map((p, i) => (
           <div
             key={i}
             className="particle"
             style={{
               left: `${p.left}%`,
+              width: `${p.size}px`,
+              height: `${p.size}px`,
               animationDuration: `${p.duration}s`,
             }}
           />
         ))}
 
-        {/* LOGO */}
-        <motion.img
-          src="/logo.png"
-          className="w-32 md:w-44 lg:w-52 mb-6 z-10"
-          initial={{ scale: 0.6, opacity: 0 }}
-          animate={{ scale: 2.5, opacity: 1 }}
-          transition={{ duration: 2 }}
-        />
-
-        {/* TITLE */}
-        <motion.h1
-          className="text-3xl md:text-5xl lg:text-6xl font-bold text-[#C9A44C] z-10"
-          initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-        >
-         
-        </motion.h1>
-
-        {/* TAGLINE */}
-        <p className="mt-11 text-lg text-gray-600 max-w-xl z-10">
-          Enabling growth across logistics, construction, and manufacturing through precise, reliable, and innovative engineering.
-        </p>
-
-        {/* CONTACT */}
-        <div className="mt-6 z-10">
-          <a
-            href="mailto:sngroups.in@gmail.com"
-            className="text-[#C9A44C] font-semibold text-lg"
+        <div className="relative z-10 text-center px-6 max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
           >
-            sngroups.in@gmail.com
-          </a>
-          <p className="text-sm mt-2">9538136989 | 9731720789</p>
+            <h1 className="text-5xl md:text-8xl font-bold mb-6 tracking-tight leading-tight">
+              Engineering <span className="text-gradient">Precision</span>,<br />
+              Delivering <span className="text-primary">Growth</span>.
+            </h1>
+            <p className="text-lg md:text-xl text-text-muted mb-10 max-w-2xl mx-auto">
+              Enabling excellence across logistics, construction, and manufacturing through innovative and reliable industrial solutions.
+            </p>
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <a href="#services" className="btn-premium text-lg px-10 py-4">
+                Our Services
+              </a>
+              <a href="#about" className="px-10 py-4 rounded-xl border border-card-border hover:border-primary transition-all font-semibold glass">
+                Learn More
+              </a>
+            </div>
+          </motion.div>
         </div>
+
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 opacity-50"
+        >
+          <div className="w-1 h-12 rounded-full bg-primary/30 flex items-start justify-center p-1">
+            <div className="w-full h-2 rounded-full bg-primary" />
+          </div>
+        </motion.div>
       </section>
 
-      {/* ABOUT */}
-      <Section id="about" title="ABOUT US">
-        SN Groups is a dynamic and rapidly expanding enterprise offering end-to-end professional solutions across rentals, sales, service, and manufacturing. Driven by a deep commitment to quality, precision, and performance, the company integrates advanced practices with strategic execution to deliver exceptional results. By continuously embracing innovation and maintaining the highest standards of reliability and efficiency, SN Groups positions itself as a trusted partner for businesses seeking long-term value and consistent excellence across diverse industrial sectors
-      </Section>
-
-      {/* SERVICES */}
-      <Section id="services" title="Our Services">
-        <p className="text-gray-600 text-sm md:text-lg max-w-2xl mx-auto mb-8 px-4">
-          SN Groups provides professional drone rental and drone sales services across India. Through our drone division, Skysnap Studio, we specialize in aerial photography, surveying and industrial drone solutions for construction, real estate, and media production.
-          We offer reliable, high-performance drones and expert support to help businesses capture, analyze, and optimize their operations from above.
-        </p>
-        <div className="relative w-full min-h-[300px] md:min-h-[450px] flex items-center justify-center">
-
-          {/* BUTTONS */}
-          <motion.div
-            initial={{ opacity: 1 }}
-            animate={{ opacity: hovered ? 0 : 1 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="flex flex-col items-center gap-4 px-4 sm:flex-wrap sm:flex-row sm:justify-center"
-          >
-            {["Rentals", "Sales", "Logistics", "HR Outsourcing"].map((item) => (
-              <motion.div
-                key={item}
-                whileHover={{ scale: 1.1 }}
-                className="ultra-card w-full max-w-xs text-center py-3 rounded-xl"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setHovered(item);
-                }}
-              >
-                {item}
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* POPUP */}
-          {hovered && (
-            <motion.div
-              className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/10"
-              onClick={() => setHovered(null)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18, ease: "easeOut" }}
-            >
-              <motion.div
-                className="bg-white w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] xl:w-[40%]
-                          p-6 md:p-8 rounded-2xl shadow-xl
-                          flex flex-col items-start justify-center text-left relative"
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.50, ease: "easeOut", delay: 0.1 }}
-                onClick={(e) => e.stopPropagation()}
-              >
-
-                {/* TITLE */}
-                <h3 className="absolute top-4 left-4 text-lg md:text-xl text-[#C9A44C] font-semibold">
-                  {hovered}
-                </h3>
-
-                {/* CONTENT */}
-                <p className="text-gray-600 text-sm md:text-base w-full max-w-2xl leading-relaxed mt-8">
-                  {getServiceContent(hovered)}
-                </p>
-
-              </motion.div>
-            </motion.div>
-          )}
-
-        </div>
-
-      </Section>
-
-      {/* VISION */}
-      <Section id="vision" title="Vision">
-        To become a trusted and leading enterprise across logistics, construction, and manufacturing by delivering innovative, reliable, and high-quality solutions that consistently meet and exceed industry expectations. With a strong focus on operational excellence, technological advancement, and customer-centric practices, we aim to create long-term value, foster meaningful partnerships, and drive sustainable growth, positioning SN Groups as a respected and influential name across multiple industrial sectors.
-      </Section>
-
-      {/* MISSION */}
-      <Section id="mission" title="Mission">
-        <ul className="space-y-3 text-left">
-          <li>• Deliver high-quality services with a strong focus on precision, consistency, and excellence</li>
-          <li>• Build strong and long-term relationships based on trust, transparency, and reliability</li>
-          <li>• Expand across industries by identifying new opportunities and driving sustainable growth</li>
-          <li>• Leverage technology-driven solutions to improve efficiency, performance, and scalability</li>
-          <li>• Ensure timely execution and dependable delivery across all projects and operations</li>
-          <li>• Continuously enhance processes to maintain operational excellence and industry standards</li>
-          <li>• Foster innovation by adapting to evolving market trends and modern technologies</li>
-          <li>• Maintain a customer-centric approach focused on satisfaction, value, and long-term success</li>
-          <li>• Promote professionalism, accountability, and a culture of continuous improvement</li>
-          <li>• Deliver cost-effective solutions without compromising on quality and reliability</li>
-        </ul>
-      </Section>
-
-      {/* FOUNDERS */}
-      <Section 
-      id="leadership" 
-      className="section min-h-screen flex flex-col items-center px-4 md:px-6 lg:px-8 text-center relative"
-      >
-        <h2 className="text-4xl font-semibold text-[#C9A44C] mt-20">
-          Founders
-        </h2>
-        <div className="flex flex-col justify-between w-full h-[70vh]">
-          <div className="relative w-full mx-auto min-h-[300px] md:min-h-[450px] text-center flex items-center justify-center">
-
-            {/* BUTTONS */}
-            <motion.div
-              initial={{ opacity: 1 }}
-              animate={{ opacity: founderHovered ? 0 : 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-8 px-4"
-            >
-              {["Founder", "Co-Founder"].map((item) => (
-                <motion.div
-                  key={item}
-                  whileHover={{ scale: 1.1 }}
-                  className="ultra-card px-8 py-4 whitespace-nowrap"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setFounderHovered(item);
-                  }}
-                >
-                  {item}
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* HOVER VIEW */}
-            {founderHovered && (
-              <motion.div
-                className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/10"
-                onClick={() => setFounderHovered(null)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.18, ease: "easeOut" }}
-              >
-                <motion.div
-                  className="bg-white w-[90%] sm:w-[80%] md:w-[70%] lg:w-[50%] xl:w-[40%]
-                  max-w-none min-h-[250px] md:min-h-[320px]
-                  p-6 md:p-8 rounded-2xl shadow-xl
-                  flex flex-col items-start justify-center text-left relative"
-                  initial={{ scale: 0.95, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.50, ease: "easeOut" , delay: 0.1}}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <h3 className="absolute top-4 left-4 text-lg md:text-xl text-[#C9A44C] font-semibold">
-                    {founderHovered}
-                  </h3>
-
-                  <p className="text-gray-600 text-sm md:text-base w-full max-w-2xl leading-relaxed mt-6">
-                    {getFounderContent(founderHovered)}
-                  </p>
-                </motion.div>
-              </motion.div>
-            )}
-          
+      {/* ABOUT SECTION */}
+      <Section id="about" title="ABOUT US" subtitle="The Foundation of Excellence">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="text-left space-y-6">
+            <p className="text-xl leading-relaxed text-text-muted">
+              SN Groups is a dynamic and rapidly expanding enterprise offering end-to-end professional solutions across rentals, sales, service, and manufacturing.
+            </p>
+            <p className="text-lg text-text-muted opacity-80">
+              Driven by a deep commitment to quality, precision, and performance, we integrate advanced practices with strategic execution to deliver exceptional results for our partners.
+            </p>
+            <div className="grid grid-cols-2 gap-4 pt-4">
+              <div className="p-4 rounded-2xl glass">
+                <span className="block text-3xl font-bold text-primary mb-1">100%</span>
+                <span className="text-sm font-medium opacity-70">Quality Assurance</span>
+              </div>
+              <div className="p-4 rounded-2xl glass">
+                <span className="block text-3xl font-bold text-primary mb-1">24/7</span>
+                <span className="text-sm font-medium opacity-70">Support Ready</span>
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            <div className="absolute -inset-4 bg-primary/10 blur-3xl rounded-full" />
+            <Image src="/logistics.png" alt="Logistics" width={600} height={400} className="relative z-10 rounded-3xl shadow-2xl border border-white/10 w-full h-auto" />
           </div>
         </div>
       </Section>
-      
-      <ScrollIndicator />
+
+      {/* SERVICES SECTION */}
+      <Section id="services" title="Our Services" subtitle="Specialized Industrial Solutions" className="bg-black/5 dark:bg-white/[0.02]">
+        <p className="text-text-muted text-lg max-w-3xl mx-auto mb-12">
+          Through our specialized drone division, **Skysnap Studio**, we provide professional drone rentals, sales, and surveying services across India, empowering construction, real estate, and media production with expert aerial insights.
+        </p>
+        <div className="bento-grid">
+          {SERVICES.map((service) => {
+            const Icon = service.icon;
+            return (
+              <motion.div
+                key={service.id}
+                whileHover={{ scale: 1.02 }}
+                className={`bento-item glass ${service.span}`}
+              >
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
+                  <Icon className="text-primary" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+                  <p className="text-sm text-text-muted leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
+                <div className="mt-4 flex justify-end">
+                  <div className="w-10 h-10 rounded-full border border-primary/20 flex items-center justify-center hover:bg-primary hover:text-white transition-all cursor-pointer">
+                    <ArrowUpRight size={18} />
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </Section>
+
+      {/* VISION & MISSION */}
+      <section className="section py-24 px-6 md:px-24">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
+          <motion.div 
+            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            className="p-10 rounded-[32px] glass relative overflow-hidden"
+          >
+             <div className="absolute top-0 right-0 p-8 opacity-10">
+               <Eye size={120} />
+             </div>
+             <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-6">
+                <Target className="text-primary" />
+             </div>
+             <h2 id="vision" className="text-4xl font-bold mb-6">Our Vision</h2>
+             <p className="text-lg text-text-muted leading-relaxed">
+               To become a trusted and leading enterprise across logistics, construction, and manufacturing by delivering innovative, reliable, and high-quality solutions that consistently meet and exceed industry expectations.
+             </p>
+          </motion.div>
+
+          <motion.div 
+            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: 30 }}
+            className="p-10 rounded-[32px] glass relative overflow-hidden"
+          >
+             <div className="absolute top-0 right-0 p-8 opacity-10">
+               <Award size={120} />
+             </div>
+             <div className="w-14 h-14 rounded-2xl bg-primary/20 flex items-center justify-center mb-6">
+                <Target className="text-primary" />
+             </div>
+             <h2 id="mission" className="text-4xl font-bold mb-6">Our Mission</h2>
+             <ul className="space-y-4 text-text-muted">
+                {[
+                  "Deliver high-quality services with precision",
+                  "Build strong, long-term relationships",
+                  "Leverage technology for efficiency",
+                  "Ensure timely and dependable execution"
+                ].map((item, idx) => (
+                  <li key={idx} className="flex items-center gap-3">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                    {item}
+                  </li>
+                ))}
+             </ul>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* FOUNDERS SECTION */}
+      <Section id="founders" title="Founders" subtitle="The Minds Behind the Vision">
+        <div className="grid md:grid-cols-2 gap-8 mt-12">
+          {FOUNDERS.map((founder) => (
+            <motion.div
+              key={founder.name}
+              whileHover={{ y: -10 }}
+              className="p-8 rounded-[32px] glass text-left border border-white/5 hover:border-primary/20 transition-all flex flex-col md:flex-row gap-8 items-center"
+            >
+              <div className="w-32 h-32 rounded-2xl bg-primary/5 flex-shrink-0 flex items-center justify-center overflow-hidden border border-primary/20">
+                <Image src={founder.image} alt={founder.name} width={128} height={128} className="w-full h-full object-contain p-4" />
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold mb-1">{founder.name}</h3>
+                <span className="text-primary font-semibold text-sm tracking-wider uppercase mb-4 block">
+                  {founder.role}
+                </span>
+                <p className="text-text-muted leading-relaxed mb-6">
+                  {founder.description}
+                </p>
+                <div className="flex gap-4">
+                   <a href="#" className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:text-primary transition-all">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+                   </a>
+                   <a href="#" className="p-2 rounded-lg bg-black/5 dark:bg-white/5 hover:text-primary transition-all">
+                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
+                   </a>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </Section>
+
+      {/* FOOTER */}
+      <footer className="bg-black/5 dark:bg-white/[0.02] border-t border-card-border py-16 px-6">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-12">
+          <div className="md:col-span-2">
+            <div className="flex items-center gap-2 mb-6">
+              <Image src="/logo.png" alt="SN Groups" width={32} height={32} className="object-contain" />
+              <span className="font-bold text-xl text-gradient">SN Groups</span>
+            </div>
+            <p className="text-text-muted max-w-sm mb-8">
+              Enabling growth across logistics, construction, and manufacturing through precise, reliable, and innovative engineering.
+            </p>
+            <div className="flex flex-col gap-3">
+              <a href="mailto:sngroups.in@gmail.com" className="flex items-center gap-3 text-text-muted hover:text-primary transition-colors">
+                <Mail size={18} /> sngroups.in@gmail.com
+              </a>
+              <a href="tel:9538136989" className="flex items-center gap-3 text-text-muted hover:text-primary transition-colors">
+                <Phone size={18} /> 9538136989 | 9731720789
+              </a>
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="font-bold mb-6">Quick Links</h4>
+            <ul className="space-y-4 text-text-muted">
+              {["About", "Services", "Vision", "Mission", "Founders"].map(link => (
+                <li key={link}>
+                  <a href={`#${link.toLowerCase()}`} className="hover:text-primary transition-colors">{link}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-bold mb-6">Industrial Solutions</h4>
+            <ul className="space-y-4 text-text-muted">
+              <li>Equipment Rentals</li>
+              <li>Product Sales</li>
+              <li>Technical Service</li>
+              <li>Logistics Management</li>
+            </ul>
+          </div>
+        </div>
+        <div className="max-w-7xl mx-auto mt-16 pt-8 border-t border-card-border flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-text-muted">
+          <p>© 2026 SN Groups. All rights reserved.</p>
+          <div className="flex gap-8">
+            <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
+
+      {/* THEME TOGGLE & BACK TO TOP */}
+      <div className="fixed bottom-8 right-8 z-50 flex flex-col gap-4">
+        <motion.button 
+          whileHover={{ scale: 1.1 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          className="w-12 h-12 rounded-full glass flex items-center justify-center shadow-xl hover:text-primary transition-all"
+        >
+          <ArrowUpRight className="-rotate-45" />
+        </motion.button>
+      </div>
     </main>
   );
 }
 
 /* SECTION COMPONENT */
-function Section({ id, title, children }: any) {
+interface SectionProps {
+  id: string;
+  title: string;
+  subtitle: string;
+  children: ReactNode;
+  className?: string;
+}
+function Section({ id, title, subtitle, children, className = "" }: SectionProps) {
   return (
     <motion.section
       id={id}
-      className="section w-full min-h-screen flex flex-col justify-center items-center px-4 sm:px-6 lg:px-8 text-center relative"
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.9 }}
+      className={`section min-h-screen py-24 px-6 md:px-24 flex flex-col justify-center items-center text-center relative ${className}`}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
     >
-      <div className="bg-glow"></div>
+      <div className="bg-glow" />
+      
+      <div className="relative z-10 max-w-6xl w-full">
+        <motion.span 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="text-primary font-bold tracking-[0.2em] uppercase text-sm mb-4 block"
+        >
+          {subtitle}
+        </motion.span>
+        
+        <h2 className="text-4xl md:text-6xl font-bold mb-12 tracking-tight">
+          {title}
+        </h2>
 
-      <h2 className="text-4xl font-semibold text-[#C9A44C] mb-8 z-10">
-        {title}
-      </h2>
-
-      <div className="max-w-4xl text-gray-700 z-10">
-        {children}
+        <div className="w-full">
+          {children}
+        </div>
       </div>
     </motion.section>
-  );
-}
-
-function getServiceContent(service: string) {
-  switch (service) {
-    case "Rentals":
-      return "We provide reliable and cost-effective rental solutions tailored to the specific needs of industrial and commercial operations, delivering high-quality equipment, dependable service, and flexible support that ensures efficiency, minimizes downtime, and enhances overall productivity..";
-
-    case "Sales":
-      return "We offer high-quality products developed to deliver exceptional durability and performance, with a strong focus on client satisfaction, ensuring reliable operation, long-term efficiency, and consistent value across a wide range of industrial and commercial applications.";
-
-    case "Logistics":
-      return "We support efficient logistics and supply chain operations by delivering timely, reliable, and seamless movement of goods, ensuring smooth coordination, minimized delays, and enhanced operational efficiency across every stage of the supply chain.";
-
-    case "HR Outsourcing":
-      return "We provide comprehensive human resources outsourcing solutions that help businesses manage their workforce efficiently. From recruitment and onboarding to payroll management and compliance, our services streamline operations, reduce administrative burden, and ensure access to skilled talent, enabling organizations to focus on their core growth and strategic objectives.";
-
-      default:
-      return "";
-  }
-}
-
-function getFounderContent(role: string) {
-  switch (role) {
-    case "Founder":
-      return (
-        <>
-          <strong>Sharan S</strong>, <br />
-          Founder of SN Groups, brings a high level of technical precision, analytical thinking, and problem-solving expertise, playing a pivotal role in driving operational excellence, optimizing processes, and providing strategic technical direction that supports the company’s growth and innovation.
-        </>
-      );
-
-    case "Co-Founder":
-      return (
-        <>
-          <strong>Nehaa S Prasad</strong>, <br />
-          Co-Founder of SN Groups, brings a strong foundation in technology and business execution, focusing on strategy, operations, and growth, ensuring scalability and positioning the organization as a forward-looking enterprise.
-        </>
-      );
-
-    default:
-      return "";
-  }
-}
-
-function ScrollIndicator() {
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const main = document.querySelector("main");
-
-    if (!main) return;
-
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const height =
-        document.documentElement.scrollHeight - window.innerHeight;
-
-      if (height <= 0) {
-        setProgress(0);
-        return;
-      }
-
-      const scrolled = scrollTop / height;
-      setProgress(scrolled);
-      const footer = document.querySelector("footer");
-
-      if (footer) {
-        const footerTop = footer.getBoundingClientRect().top;
-        const windowHeight = window.innerHeight;
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const radius = 45;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference * (1 - progress);
-
-  return (
-    <div
-      className="fixed bottom-6 right-6 z-50 cursor-pointer hover:scale-110 transition"
-      onClick={() => {
-        const main = document.querySelector("main");
-        main?.scrollTo({ top: 0, behavior: "smooth" });
-      }}
-    >
-      <div className="relative w-14 h-14">
-
-        <svg
-          className="absolute top-0 right-0 w-full h-full -rotate-90"
-          viewBox="0 0 100 100"
-        >
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            stroke="#eeeeeeff"
-            strokeWidth="5"
-            fill="none"
-          />
-
-          <circle
-            cx="50"
-            cy="50"
-            r="45"
-            stroke="#C9A44C"
-            strokeWidth="7"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-          />
-        </svg>
-
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img src="/logo.png" className="w-15 h-15 object-contain" />
-        </div>
-
-      </div>
-    </div>
   );
 }
