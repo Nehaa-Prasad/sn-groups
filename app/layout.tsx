@@ -19,25 +19,72 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "SN Groups",
+  title: "SN Groups | Premier Drone Services & Industrial Solutions India",
   description:
-    "SN Groups offers professional drone rentals, drone sales, aerial photography, and drone services in India. Trusted solutions for construction, surveying, and media production.",
+    "SN Groups is India's leading provider of professional drone rentals, industrial sales, logistics management, and expert manpower solutions. Specialized in aerial surveying, photography, and technical services.",
   keywords: [
     "drone rental India",
     "drone rental Bangalore",
-    "drone services India",
-    "drone photography",
-    "drone sales India",
-    "aerial survey drones",
+    "industrial drone services",
+    "aerial photography India",
+    "drone sales Bangalore",
+    "industrial manpower solutions",
+    "logistics management India",
+    "manpower for hire Bangalore",
+    "technical workforce solutions",
+    "drone surveying construction",
+    "Skysnap Studio drones",
+    "SN Groups Bangalore"
   ],
+  authors: [{ name: "SN Groups" }],
+  openGraph: {
+    title: "SN Groups | Industrial Excellence & Drone Intelligence",
+    description: "Providing high-performance drone solutions and industrial services across India.",
+    url: "https://sngroups.in",
+    siteName: "SN Groups",
+    images: [
+      {
+        url: "/hero.png",
+        width: 1200,
+        height: 630,
+        alt: "SN Groups Industrial Solutions",
+      },
+    ],
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SN Groups | Drone & Industrial Solutions",
+    description: "Leading industrial solutions provider specializing in drones and manpower.",
+    images: ["/hero.png"],
+  },
   verification: {
-    google:"atfNvy9LMLj6IDHx5i_-t4t7jETHuX8bP-3_SOLJxIQ",
+    google: "atfNvy9LMLj6IDHx5i_-t4t7jETHuX8bP-3_SOLJxIQ",
   },
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "SN Groups",
+  "image": "https://sngroups.in/logo.png",
+  "description": "Professional drone rentals, industrial sales, logistics, and manpower solutions in India.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bangalore",
+    "addressRegion": "Karnataka",
+    "addressCountry": "IN"
+  },
+  "url": "https://sngroups.in",
+  "telephone": "+919538136989",
+  "priceRange": "$$",
+  "openingHours": "Mo-Fr 09:00-18:00"
 };
 
 export default function RootLayout({
@@ -48,9 +95,15 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${outfit.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

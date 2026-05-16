@@ -27,7 +27,7 @@
 
 /* ---------- BASE ---------- */
 html {
-  scroll-behavior: smooth;
+  /* Native scrolling for 'free' feel */
 }
 
 body {
@@ -37,20 +37,14 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ---------- SCROLL SNAP ---------- */
+/* ---------- LAYOUT ---------- */
 main {
-  scroll-snap-type: y mandatory;
-  overflow-y: scroll;
-  height: 100vh;
-  scrollbar-width: none; /* Hide scrollbar Firefox */
-}
-
-main::-webkit-scrollbar {
-  display: none; /* Hide scrollbar Chrome/Safari */
+  min-height: 100vh;
+  position: relative;
 }
 
 .section {
-  scroll-snap-align: start;
+  width: 100%;
 }
 
 /* ---------- GLASSMORPHISM ---------- */
@@ -149,6 +143,19 @@ nav a:hover {
   transition: 0.3s;
   display: inline-block;
   text-align: center;
+}
+
+/* ---------- PROGRESS CIRCLE ---------- */
+.progress-circle {
+  transform: rotate(-90deg);
+}
+
+.progress-circle circle {
+  fill: none;
+  stroke-width: 2;
+  stroke: var(--primary);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.1s linear;
 }
 
 .btn-premium:hover {
